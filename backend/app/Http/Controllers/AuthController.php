@@ -12,26 +12,26 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         Log::info('Register request received', ['request' => $request->all()]);
-        $validated = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
+            'role' => 'required|string|in:employee,admin',
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password']),
-            'role' => 'employee',
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
         ]);
 
-        if (!$user) {
-            Log::error('User registration failed', ['email' => $validated['email']]);
-            return response()->json(['error' => 'User registration failed'], 500);
-        }
         $token = $user->createToken('auth_token')->accessToken;
 
-        return response()->json(['user' => $user, 'access_token' => $token], 201);
+        return response()->json([
+            'access_token' => $token,
+            'user' => $user,
+        ], 201);
     }
 
     public function login(Request $request)

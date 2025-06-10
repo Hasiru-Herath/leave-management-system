@@ -6,6 +6,7 @@ function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function Register() {
         name,
         email,
         password,
+        role
       });
       localStorage.setItem('token', response.data.access_token);
       localStorage.setItem('role', response.data.user.role);
@@ -45,6 +47,18 @@ function Register() {
               onChange={(e) => setName(e.target.value)}
               required
             />
+          </div>
+          <div className="form-group">
+            <label>Role</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              required
+            >
+              <option value="">Select Role</option>
+              <option value="employee">Employee</option>
+              <option value="admin">Admin</option>
+            </select>
           </div>
           <div className="form-group">
             <label>Email</label>
