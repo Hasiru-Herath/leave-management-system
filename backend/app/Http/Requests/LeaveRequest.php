@@ -3,12 +3,16 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class LeaveRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->user()->role === 'employee';
+        $user = Auth::user();
+        Log::info('User logged in', ['user_id' => $user->id, 'email' => $user->email]);
+        return $user && ($user->role === 'employee' || $user->role === 'admin');
     }
 
     public function rules(): array

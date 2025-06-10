@@ -7,7 +7,7 @@ use App\Http\Controllers\LeaveController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::middleware('auth:api')->group(function () {
+Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/leaves', [LeaveController::class, 'store'])->middleware('role:employee');
     Route::get('/leaves', [LeaveController::class, 'index']);

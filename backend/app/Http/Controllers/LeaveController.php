@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LeaveRequest;
 use App\Models\Leave;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LeaveController extends Controller
 {
@@ -21,6 +22,7 @@ class LeaveController extends Controller
 
     public function store(LeaveRequest $request)
     {
+        Log::info('Leave request received', ['request' => $request->all()]);
         $leave = Leave::create([
             'user_id' => auth()->id(),
             'start_date' => $request->start_date,
