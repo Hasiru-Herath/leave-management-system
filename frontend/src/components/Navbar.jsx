@@ -1,13 +1,13 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
-  const role = localStorage.getItem('role');
+  const role = localStorage.getItem("role");
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/login');
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/login");
   };
 
   return (
@@ -17,8 +17,12 @@ function Navbar() {
         <div>
           {role && (
             <>
-              <span style={{ marginRight: '1rem' }}>Welcome, {role}</span>
+              <span style={{ marginRight: "1rem" }}>Welcome, {role}</span>
+              <button onClick={() => navigate("/register")} style={{ marginRight: "1rem" ,backgroundColor:"grey"}}>
+                Register
+              </button>
               <button onClick={handleLogout}>Logout</button>
+              
             </>
           )}
         </div>
