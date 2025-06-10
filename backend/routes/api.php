@@ -11,5 +11,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::post('/leaves', [LeaveController::class, 'store'])->middleware('role:employee');
     Route::get('/leaves', [LeaveController::class, 'index']);
-    Route::put('/leaves/{id}', [LeaveController::class, 'update'])->middleware('role:admin');
+    Route::put('/leaves-update', [LeaveController::class, 'update'])->middleware('role:admin');
 });

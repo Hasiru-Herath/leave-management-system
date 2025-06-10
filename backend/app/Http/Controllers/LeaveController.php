@@ -33,8 +33,16 @@ class LeaveController extends Controller
         return response()->json($leave, 201);
     }
 
-    public function update(Request $request, Leave $leave)
+    public function update(Request $request)
     {
+        if (auth()->user()->role !== 'admin') {
+            return response()->json(['error' => 'Unauthorized'], 403);
+        }
+
+        $leave = Leave::findOrFail($request->leaveId);
+        Log::info('Leave update request received', [
+            'request' => $request->all(),
+        ]);
         $validated = $request->validate([
             'status' => 'required|in:approved,rejected',
         ]);
